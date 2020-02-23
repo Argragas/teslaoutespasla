@@ -1,7 +1,7 @@
 {
-    "type": "sqljs",
-    "entities": [
-        "dist/api/models/product.js"
-    ],
-    "synchronize": true
+      "type": "sqlite",
+      "database": "database.db",
+      "synchronize": true,
+      "logging": false,
+      "entities": [ "dist/api/models/product.entity.js"]
 }

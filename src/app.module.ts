@@ -7,12 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
      imports: [TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.db',
-      synchronize: true,
-      logging: false,
-      entities: [ './api/models/*.entity{.ts,.js}'],
-    }),ApiModule],
+      "type": "sqlite",
+      "database": "database.db",
+      "synchronize": true,
+      "logging": false,
+      "entities": [ "dist/api/models/product.entity.js"]
+}),ApiModule],
   controllers: [AppController],
   providers: [AppService],
 })
