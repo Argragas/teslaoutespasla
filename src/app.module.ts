@@ -6,7 +6,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), ApiModule],
+     imports: [TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'database.db',
+      synchronize: true,
+      logging: false,
+      entities: [ './api/models/*.entity{.ts,.js}'],
+    }),ApiModule],
   controllers: [AppController],
   providers: [AppService],
 })

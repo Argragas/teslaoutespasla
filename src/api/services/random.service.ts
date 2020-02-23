@@ -1,14 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsService } from './product.service';
+import { CrudRequest } from '@nestjsx/crud';
 
 @Injectable()
 export class RandomService {
-    constructor(public service: ProductsService) {}
+    constructor( public service: ProductsService ) {}
     
-    public getProducts(nb: number) {
+    public getProducts(nb: number): Promise<any> {
+        return new Promise(( resolve: any, reject: any ): any => {
+
        //50 = 15 + 11 + 9 + 8 + 7
       const probaRange = Math.floor(Math.random() * 50) + 1; // returns a random integer from 1 to 50
-      const products = this.service.getMany(null);
+      const req: CrudRequest= null;
+      const products = this.service.getMany(req);
+      console.log(probaRange)
+      console.log(nb)
+      console.log(products)
+      let data = [];
        if ( probaRange <= 15 ) {
 
        } else if (probaRange <= 26) {
@@ -18,8 +26,15 @@ export class RandomService {
        } else if ( probaRange <= 43) {
 
        }else {
-            return {pouet: 'pouet'};
+            data.push( {pouet: 'pouet'});
        }
+
+       return resolve({
+                    error: null,
+                    count: data.length,
+                    data: data,
+                });
+            });
         
     }
 

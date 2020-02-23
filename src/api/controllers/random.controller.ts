@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { RandomService } from '../services/random.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiQuery } from '@nestjs/swagger';
 
 @Controller('random')
 export class RandomController {
@@ -9,9 +9,12 @@ export class RandomController {
 
     
     @Get()
-    @ApiQuery( { name: 'nb', type: String } )
+    @ApiQuery( { name: 'nb', type: Number } )
     @ApiResponse({status: 200, type: Object })
-    async letsGetReadyToRumble() {
+    async letsGetReadyToRumble(
+         @Query( 'nb' ) nb : number,
+    ) {
+        console.log(nb);
         return await this.service.getProducts(nb);
     }
 
