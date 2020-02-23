@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsService } from './product.service';
-import { CrudRequest } from '@nestjsx/crud';
+import { CrudRequest, CrudService } from '@nestjsx/crud';
 
 @Injectable()
 export class RandomService {
@@ -10,12 +10,10 @@ export class RandomService {
         return new Promise(( resolve: any, reject: any ): any => {
 
        //50 = 15 + 11 + 9 + 8 + 7
-      const probaRange = Math.floor(Math.random() * 50) + 1; // returns a random integer from 1 to 50
-      const req: CrudRequest= null;
-      const products = this.service.getMany(req);
-      console.log(probaRange)
+      const probaRange = Math.floor(Math.random() * 50) + 1; // returns a random integer from 1 to 50      console.log(probaRange);
       console.log(nb)
-      console.log(products)
+      const products = this.getAllProductsSqlite();
+      
       let data = [];
        if ( probaRange <= 15 ) {
 
@@ -41,8 +39,35 @@ export class RandomService {
     private letsGetReadyToRumble(nb: number) {
         const tab = [];
         for (let index = 0; index < nb; index++) {
-            tab.push( );
+            tab.push( row );
         }
        return  tab;
     }
+
+    private getAllProductsSqlite(){
+        const tab = [];
+        const sqlite3 = require('sqlite3').verbose();
+        console.log(__dirname)
+        // open the database
+        let db = new sqlite3.Database('/projects/teslaoutespasla/database.db');
+        
+        let sql = `SELECT * FROM product`;
+        
+        db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        rows.forEach((row) => {
+            console.log(row);
+            tab.push(row)
+        });
+        });
+        
+        // close the database connection
+        db.close();
+
+        return tab;
+
+    }
+
 }
